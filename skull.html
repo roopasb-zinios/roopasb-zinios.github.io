@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html style="height: 100%; overflow: hidden;">
+  <body style="height: 100%; margin: 0">
+  	<script src="https://developer.biodigital.com/builds/api/2/human-api.min.js"></script>
+    <iframe id="myWidget"
+          src="https://human.biodigital.com/widget?s=male&o=Bones_of_the_Head&bgstd=black&dk=3847b9621a240f24dbadb0f3df823c34439cea11"
+          width="100%"
+          height="100%">
+    </iframe>
+    <script>
+         var human = new HumanAPI("myWidget");
+
+         // Create annotation attached to an object
+         human.send("annotations.create", {
+             title: "My annotation",
+             description: "This annotation was created via the API.",
+             objectId: "maleAdult_standard-Frontal_bone_52734_ID",
+             annotationId: "myAnnotationId"
+         });
+
+         human.send("annotations.create", {
+             title: "Annother annotation",
+             description: "This annotation was also created via the API.",
+              objectId: "maleAdult_standard-Right_major_alar_cartilage_59505_ID",
+         });
+
+         human.on("human.ready", function() {
+         console.log("Destroying annotation in 2s");
+
+         setTimeout(function() {
+
+        // Destroy annotation using the annotation ID we provided
+        // on creation.
+        human.send("annotations.destroy", "myAnnotationId");
+        console.log("Annotation destroyed");
+        }, 2000);
+        //  (function update() {
+
+        // // Orbit camera horizontally around target
+        // human.send("camera.orbit", {
+        //     yaw: 0.2
+        // });
+
+        // requestAnimationFrame(update);
+        // })();
+        });
+
+    </script>
+  </body>
+</html>

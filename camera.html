@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html style="height: 100%; overflow: hidden;">
+  <body style="height: 100%; margin: 0">
+<script src="https://developer.biodigital.com/builds/api/2/human-api.min.js"></script>
+<iframe
+        id="embeddedHuman"
+        allowFullScreen="true"
+        class="fullscreen"
+        width= "50%"
+        height= "50%"
+        src="https://human.biodigital.com/widget?s=male&o=Bones_of_the_Head&bgstd=black&dk=3847b9621a240f24dbadb0f3df823c34439cea11">
+</iframe>
+
+<iframe
+        id="embeddedHuman1"
+        allowFullScreen="true"
+        class="fullscreen"
+        width= "50%"
+        height= "50%"
+        src="https://human.biodigital.com/widget?s=male&o=Bones_of_the_Head&bgstd=black&dk=3847b9621a240f24dbadb0f3df823c34439cea11">
+</iframe>
+    <script>
+var human = new HumanAPI("embeddedHuman");
+
+human.on("human.ready", function() {
+
+    (function update() {
+
+        // Orbit camera horizontally around target
+        human.send("camera.orbit", {
+            yaw: 0.2
+        });
+
+        requestAnimationFrame(update);
+    })();
+});;
+
+
+// Initialize API
+var human1 = new HumanAPI("embeddedHuman1");
+
+human1.on("human.ready", function() {
+    var MAX_PAN = 10;
+    var currentPan = 0;
+    var velocity = 0.1;
+
+    (function update() {
+
+        // Pan camera to the left or right
+        human1.send("camera.pan", {
+            x: velocity
+        });
+
+        currentPan += velocity;
+
+        // Switch directions if outside range
+        if (Math.abs(currentPan) > MAX_PAN) {
+            velocity *= -1;
+        }
+
+        requestAnimationFrame(update);
+    })();
+});
+
+
+(function () {
+    "use strict";
+
+    var logElement = null;
+
+    window.utils = {
+        log: function (msg) {
+            if (!logElement) {
+                initLog();
+            }
+            logElement.innerHTML += "<p style='padding:2px; margin:2px;'>[HumanAPI] : " + msg + "</p>";
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+    };
+
+    function initLog () {
+        logElement = document.createElement("div");
+        logElement.id = "defaultLog";
+        logElement.style.height = "auto";
+        logElement.style.width = "100%";
+        logElement.style.padding = "0";
+        logElement.style.margin = "0";
+
+        document.body.appendChild(logElement);
+    }
+})();
+    </script>
+  </body>
+</html>
