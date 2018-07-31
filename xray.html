@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html style="height: 100%; overflow: hidden;">
+  <body style="height: 100%; margin: 0">
+  	<script src="https://developer.biodigital.com/builds/api/2/human-api.min.js"></script>
+    <iframe id="myWidget"
+          src="https://human.biodigital.com/widget?s=male&o=Bones_of_the_Head&bgstd=black&dk=3847b9621a240f24dbadb0f3df823c34439cea11"
+          width="100%"
+          height="100%">
+    </iframe>
+    <script>
+// Initialize API
+var human = new HumanAPI("myWidget");
+
+var enable = true;
+
+human.on("scene.xrayEnabled", function() {
+    utils.log("Xray mode enabled");
+});
+
+human.on("scene.xrayDisabled", function() {
+    utils.log("Xray mode disabled");
+});
+
+human.on("human.ready", toggleXray);
+
+function toggleXray() {
+    human.send(enable ? "scene.enableXray" : "scene.disableXray");
+
+    enable = !enable;
+
+    setTimeout(toggleXray, 3000);
+}
+
+
+(function () {
+    "use strict";
+
+    var logElement = null;
+
+    window.utils = {
+        log: function (msg) {
+            if (!logElement) {
+                initLog();
+            }
+            logElement.innerHTML += "<p style='padding:2px; margin:2px;'>[HumanAPI] : " + msg + "</p>";
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+    };
+
+    function initLog () {
+        logElement = document.createElement("div");
+        logElement.id = "defaultLog";
+        logElement.style.height = "auto";
+        logElement.style.width = "100%";
+        logElement.style.padding = "0";
+        logElement.style.margin = "0";
+
+        document.body.appendChild(logElement);
+    }
+})();
+
+    </script>
+  </body>
+</html>

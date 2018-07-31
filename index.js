@@ -25,6 +25,14 @@ router.get("/camera",function(req,res){
   res.sendFile(path + "camera.html");
 });
 
+router.get("/xray",function(req,res){
+  res.sendFile(path + "xray.html");
+});
+
+router.get("/annotation",function(req,res){
+  res.sendFile(path + "annotation.html");
+});
+
 app.use("/",router);
 
 //app.use("*",function(req,res){

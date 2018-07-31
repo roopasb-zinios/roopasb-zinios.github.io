@@ -17,6 +17,13 @@
     objectId: "maleAdult_standard-Frontal_bone_52734_ID"
 });
 
+
+console.log("Pick or hover over something!");
+human.on("scene.picked",
+    function (pickEvent) {
+        console.log("'scene.picked' event: " + JSON.stringify(pickEvent));
+});
+
     </script>
   </body>
 </html>
